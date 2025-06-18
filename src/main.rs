@@ -25,6 +25,18 @@ struct AppState {
     exit: bool,
 }
 
+impl Dispatch<WlCompositor, ()> for AppState {
+    fn event(
+        _state: &mut Self,
+        _proxy: &WlCompositor,
+        _event: <WlCompositor as wayland_client::Proxy>::Event,
+        _data: &(),
+        _conn: &Connection,
+        _qhandle: &QueueHandle<Self>,
+    ) {
+    }
+}
+
 impl Dispatch<WlRegistry, ()> for AppState {
     fn event(
         _state: &mut Self,
@@ -45,11 +57,11 @@ impl Dispatch<WlRegistry, ()> for AppState {
     }
 }
 
-impl Dispatch<WlCompositor, ()> for AppState {
+impl Dispatch<WlSurface, ()> for AppState {
     fn event(
         _state: &mut Self,
-        _proxy: &WlCompositor,
-        _event: <WlCompositor as wayland_client::Proxy>::Event,
+        _proxy: &WlSurface,
+        _event: <WlSurface as wayland_client::Proxy>::Event,
         _data: &(),
         _conn: &Connection,
         _qhandle: &QueueHandle<Self>,
@@ -57,6 +69,53 @@ impl Dispatch<WlCompositor, ()> for AppState {
     }
 }
 
+impl Dispatch<WlBuffer, ()> for AppState {
+    fn event(
+        _state: &mut Self,
+        _proxy: &WlBuffer,
+        _event: <WlBuffer as wayland_client::Proxy>::Event,
+        _data: &(),
+        _conn: &Connection,
+        _qhandle: &QueueHandle<Self>,
+    ) {
+    }
+}
+
+impl Dispatch<WlCallback, ()> for AppState {
+    fn event(
+        _state: &mut Self,
+        _proxy: &WlCallback,
+        _event: <WlCallback as wayland_client::Proxy>::Event,
+        _data: &(),
+        _conn: &Connection,
+        _qhandle: &QueueHandle<Self>,
+    ) {
+    }
+}
+
+impl Dispatch<WlShm, ()> for AppState {
+    fn event(
+        _state: &mut Self,
+        _proxy: &WlShm,
+        _event: <WlShm as wayland_client::Proxy>::Event,
+        _data: &(),
+        _conn: &Connection,
+        _qhandle: &QueueHandle<Self>,
+    ) {
+    }
+}
+
+impl Dispatch<WlShmPool, ()> for AppState {
+    fn event(
+        _state: &mut Self,
+        _proxy: &WlShmPool,
+        _event: <WlShmPool as wayland_client::Proxy>::Event,
+        _data: &(),
+        _conn: &Connection,
+        _qhandle: &QueueHandle<Self>,
+    ) {
+    }
+}
 fn main() {
     let mut state = AppState {
         compositor: None,
