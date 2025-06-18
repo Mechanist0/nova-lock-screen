@@ -1,0 +1,9 @@
+[package]
+name = "nova-lock-screen"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+hyprland = "0.3.13"
+wayland-client = "0.31.10"
+wayland-protocols = "0.32.8"
