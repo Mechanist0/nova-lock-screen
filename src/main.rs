@@ -1,14 +1,16 @@
+use std::i32;
+
 // Heavily based on https://github.com/BowlBird/bbsl/
 use wayland_client::{
     Connection, Dispatch, EventQueue, QueueHandle,
     protocol::{
         wl_buffer::WlBuffer,
-        wl_callback::WlCallback,
+        wl_callback::{self, WlCallback},
         wl_compositor::WlCompositor,
         wl_registry::{self, WlRegistry},
         wl_shm::WlShm,
         wl_shm_pool::WlShmPool,
-        wl_surface::WlSurface,
+        wl_surface::{self, WlSurface},
     },
 };
 
@@ -90,6 +92,19 @@ impl Dispatch<WlCallback, ()> for AppState {
         _conn: &Connection,
         _qhandle: &QueueHandle<Self>,
     ) {
+        if let wl_callback::Event::Done { callback_data } = _event {
+            let wl_surface = _state
+                .wl_surface
+                .as_ref()
+                .expect("Cannot Connect to Surface");
+            let _ = wl_surface.frame(_qhandle, ());
+
+            //let buffer = draw_frame(_state, _qhandle).expect("Cannot Draw Frame");
+
+            //wl_surface.attach(Some(&buffer), 0, 0);
+            //wl_surface.damage_buffer(0, 0, i32::MAX, i32::MAX);
+            //wl_surface.commit();
+        }
     }
 }
 
@@ -116,6 +131,9 @@ impl Dispatch<WlShmPool, ()> for AppState {
     ) {
     }
 }
+
+// fn draw_frame(state: AppState, qhandle: &QueueHandle<AppState>) -> Result<WlBuffer, ()> {}
+
 fn main() {
     let mut state = AppState {
         compositor: None,
